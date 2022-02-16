@@ -25,12 +25,12 @@ calculateBtn.addEventListener('click', function (event) {
         totalExpenseField.style.fontFamily = "'Merriweather Sans' , sans-serif"
 
         if (incomeAmount < totalExpenseField.innerText || isNaN(incomeAmount)) {
-            incomeField.value = '';
             alert('My be your input value is string or Your income amount is Low, so you can not afford')
         } else {
             let balance = incomeAmount - totalExpenseField.innerText;
             const balanceField = document.getElementById('balance');
             balanceField.innerText = balance;
+            balanceField.style.fontFamily = "'Merriweather Sans' , sans-serif"
         }
 
     };
@@ -38,7 +38,6 @@ calculateBtn.addEventListener('click', function (event) {
 
 
     // remove value from input
-    incomeField.value = '';
     foodField.value = '';
     rentField.value = '';
     clothesField.value = '';
