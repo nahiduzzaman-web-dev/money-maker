@@ -1,0 +1,36 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600;700&display=swap');
+body{
+    font-family: 'Lobster', cursive;
+    font-family: 'Poppins', sans-serif;
+}
+
+.headline{
+    color: #BB8FCE;
+}
+
+/* input field */
+input{
+    background-color: rgba(128, 128, 128, 0.247);
+    border: none;
+    padding: 5px;
+    font-weight: 700;
+}
+
+/* Button style */
+#calculate-btn{
+    border: none;
+   color: #fff;
+   background-color: #9E7BFF;
+   padding: 6px 20px;
+   border-radius: 5px;
+   font-weight: 600;
+}
+#save-btn{
+    border: none;
+   color: #fff;
+   background-color: #9E7BFF;
+   border-radius: 5px;
+   font-weight: 600;
+   padding: 5px 15px;
+}
