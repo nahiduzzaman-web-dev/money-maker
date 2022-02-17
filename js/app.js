@@ -2,51 +2,58 @@
 const calculateBtn = document.getElementById('calculate-btn');
 const saveBtn = document.getElementById('save-btn');
 
+
+function getInputValue(inputId) {
+    const inputField = document.getElementById(inputId);
+    const inputAmountText = inputField.value;
+    const amountValue = parseFloat(inputAmountText);
+    return amountValue;
+}
+
 // calculate Button add event handler
 calculateBtn.addEventListener('click', function (event) {
     // remove auto reload
     event.preventDefault();
+    const incomeAmount = getInputValue('income-field');
+    const foodAmount = getInputValue('food-field');
+    const rentAmount = getInputValue('rent-field');
+    const clothesAmount = getInputValue('clothes-field');
+    let totalExpensesAmount = foodAmount + rentAmount + clothesAmount;
 
-    // get input value from input field
-    const incomeField = document.getElementById('income-field');
-    const foodField = document.getElementById('food-field')
-    const rentField = document.getElementById('rent-field')
-    const clothesField = document.getElementById('clothes-field')
-
-    let incomeAmount = parseFloat(incomeField.value);
-    let foodAmount = parseFloat(foodField.value);
-    let rentAmount = parseFloat(rentField.value);
-    let clothesAmount = parseFloat(clothesField.value);
+    if (isNaN(incomeAmount) || incomeAmount < 0) {
+        alert("'CHECK YOUR INCOME INPUT' - You have given a negative or string value. Give it a positive value please Then apply");
+    }
     if (isNaN(foodAmount, rentAmount, clothesAmount) || foodAmount < 0 || rentAmount < 0 || clothesAmount < 0) {
         foodField.value = '';
         rentField.value = '';
         clothesField.value = '';
-        alert("You have given a negative or string value somewhere. Give it a positive value please Then apply")
-    } else {
-        //total expenses calculation
-        let totalExpensesAmount = foodAmount + rentAmount + clothesAmount;
-        const totalExpenseField = document.getElementById('total-expenses');
-        totalExpenseField.innerText = totalExpensesAmount;
-        totalExpenseField.style.fontFamily = "'Merriweather Sans' , sans-serif"
+        alert("'CHECK YOUR FOOD/RENT/CLOSTHES INPUT' - You have given a negative or string value somewhere. Give it a positive value please Then apply");
+    }
+    if (typeof incomeAmount != 'string' && incomeAmount > 0) {
 
-        if (isNaN(incomeAmount) || incomeAmount < 0) {
-            alert('You have given a negative or string value somewhere. Give it a positive value please Then apply')
-        } else if (incomeAmount < totalExpenseField.innerText) {
-            alert('Your income amount is Low, so you can not afford')
+        if (incomeAmount > totalExpensesAmount) {
+            const totalExpenseField = document.getElementById('total-expenses');
+            totalExpenseField.innerText = totalExpensesAmount;
+            totalExpenseField.style.fontFamily = "'Merriweather Sans' , sans-serif"
+            let balance = incomeAmount - totalExpenseField.innerText;
+
+            const balanceField = document.getElementById('balance');
+            balanceField.innerText = balance;
+            balanceField.style.fontFamily = "'Merriweather Sans' , sans-serif";
         }
-        else {
-            //balance calculation
+        else if (incomeAmount < totalExpensesAmount) {
+            alert('Your income amount is Low, so you can not afford');
+            const totalExpenseField = document.getElementById('total-expenses');
             let balance = incomeAmount - totalExpenseField.innerText;
             const balanceField = document.getElementById('balance');
             balanceField.innerText = balance;
             balanceField.style.fontFamily = "'Merriweather Sans' , sans-serif";
         }
+        else {
+            alert('Your income amount is Low, so you can not afford');
+        };
 
     };
-    // remove value from input
-    foodField.value = '';
-    rentField.value = '';
-    clothesField.value = '';
 });
 
 
@@ -58,53 +65,36 @@ saveBtn.addEventListener('click', function (event) {
 
     const saveInputField = document.getElementById('save-field');
     let saveAmount = parseInt(saveInputField.value);
+    let parcentageValue = saveAmount / 100;
 
-    const savingAmountField = document.getElementById('saving-amount');
     const incomeField = document.getElementById('income-field');
     let incomeAmount = parseFloat(incomeField.value);
-    // savingAmountField.innerText = saveAmount;
-    if (isNaN(saveAmount) || incomeAmount < 0) {
-        alert('You have given a negative or string value somewhere. Give it a positive value please Then apply')
-    }
-    else if (isNaN(saveAmount) || saveAmount < 0) {
-        alert('You have given a negative or string value somewhere. Give it a positive value please Then apply')
-    }
-    else if (incomeAmount > (saveAmount / 100) * incomeAmount) {
-        // alert('Please Increase Your income then you will be saveing your amount')
-        savingAmountField.innerText = (saveAmount / 100) * incomeAmount;
-        const remainingBalance = document.getElementById('remaining-balance');
-        const balanceField = document.getElementById('balance');
-        let balanceValue = parseFloat(balanceField.innerText);
-        let savingAmountValue = parseFloat(savingAmountField.innerText);
-        if (savingAmountValue <= balanceValue) {
-            let remaining = balanceValue - savingAmountValue;
-            remainingBalance.innerText = remaining;
-            remainingBalance.style.fontFamily = "'Merriweather Sans' , sans-serif";
-            // let remaining = balanceField.innerText - savingAmountField.innerText;
-            // remainingBalance.innerText = remaining;
 
-        }
-        else {
-            // alert('You do not save your amount')
-            // let remaining = balanceField.innerText - savingAmountField.innerText;
-            alert('You do not save your amount');
-            remainingBalance.innerText = '0';
-        }
-    }
-    else {
-        // savingAmountField.innerText = (saveAmount / 100) * incomeAmount;
-        // const remainingBalance = document.getElementById('remaining-balance');
-        // const balanceField = document.getElementById('balance');
-        // if (balanceField.innerText > savingAmountField.innerText) {
-        //     let remaining = balanceField.innerText - savingAmountField.innerText;
-        //     remainingBalance.innerText = remaining;
-        // }
-        // else {
-        //     alert('You do not save your amount')
-        // }
-        alert('Please Increase Your income then you will be saveing your amount')
+    let parcentageCalculation = parcentageValue * incomeAmount;
 
+    const balanceField = document.getElementById('balance');
+    let balanceValue = parseFloat(balanceField.innerText);
+
+    const savingAmountField = document.getElementById('saving-amount');
+    let savingAmountValue = parseFloat(savingAmountField.innerText);
+
+    const remainingBalance = document.getElementById('remaining-balance');
+
+    if (isNaN(saveAmount) || saveAmount < 0) {
+        alert("'CHECK YOUR INCOME INPUT' - You have given a negative or string value. Give it a positive value please Then apply")
     }
 
+    if (incomeAmount > parcentageCalculation && savingAmountField.innerText < balanceField.innerText) {
 
+        savingAmountField.innerText = parcentageCalculation;
+    }
+    else (
+        alert('You do not save your amount')
+    )
+
+    if (balanceField.innerText > remainingBalance.innerText) {
+        const remaining = balanceValue - savingAmountField.innerText;
+        remainingBalance.innerText = remaining;
+    }
 })
+
