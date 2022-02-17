@@ -26,7 +26,7 @@ calculateBtn.addEventListener('click', function (event) {
         alert("'CHECK YOUR INCOME INPUT' - You have given a negative or string value. Give it a positive value please Then apply");
     }
 
-    if (typeof incomeAmount != 'string' && incomeAmount > 0) {
+    if (typeof incomeAmount != 'string' && incomeAmount > 0 && foodAmount >= 0 && rentAmount >= 0 && clothesAmount >= 0) {
 
         if (incomeAmount > totalExpensesAmount) {
             const totalExpenseField = document.getElementById('total-expenses');
